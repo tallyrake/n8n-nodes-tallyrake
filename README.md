@@ -6,7 +6,7 @@ topics, returned as rows your workflow can use straight away.
 The node calls the Tallyrake Google Trends Data API on RapidAPI. The request runs on the API's infrastructure, so
 your n8n instance never talks to Google itself, holds no cookies and opens no browser.
 
-[Installation](#installation) · [Credentials](#credentials) · [Operations](#operations) · [Reading the numbers](#reading-the-numbers) · [Usage](#usage) · [Compatibility](#compatibility) · [Resources](#resources)
+[Installation](#installation) · [Credentials](#credentials) · [Operations](#operations) · [Reading the numbers](#reading-the-numbers) · [Usage](#usage) · [Usage counts](#usage-counts) · [Compatibility](#compatibility) · [Resources](#resources)
 
 ## Installation
 
@@ -82,6 +82,10 @@ own, open the node's **Settings**, turn on **Retry On Fail** and set **Wait Betw
 
 Repeated identical questions are answered from the API's cache.
 
+## Usage counts
+
+Our API keeps one number for each search engine on each UTC day: a count of the calls it received for that engine and recorded, including calls it turned down. A call it fails to record is not added, so the number can be lower than the calls received, never higher. The engines are Google autocomplete, YouTube autocomplete, Amazon autocomplete, Bing autocomplete, DuckDuckGo autocomplete (an autocomplete call that names no engine counts as Google) and Google Trends. Calls made with our own developer key or from our own RapidAPI accounts are not counted. This count holds only the engine, the day and the number: it holds no search words, no country, no RapidAPI username or anything made from it, no IP address and no API key, and no log line puts the count next to any of those. Each day's count is kept for 730 days after that day and then deleted. We may publish these totals, or sell them, as counts per engine per UTC day. Questions: ops@tallyrake.com.
+
 ## Compatibility
 
 Built with the n8n node CLI 0.54.3 against n8n nodes API version 1 and `n8n-workflow` 2.45.1. The package has no
@@ -90,9 +94,10 @@ runtime dependencies.
 ## Resources
 
 - [Google Trends Data API on RapidAPI](https://rapidapi.com/tallyrake/api/google-trends-data)
+- [Canary runs and failures of the Google Trends API](https://tallyrake.com/status/)
 - [n8n community nodes documentation](https://docs.n8n.io/integrations/#community-nodes)
 
-No telemetry: the node sends nothing anywhere except the API call you configure. Its requests carry the
-User-Agent `n8n-nodes-tallyrake/<version>`.
+The node opens no channel of its own: it sends nothing anywhere except the API call you configure. Its requests
+carry the User-Agent `n8n-nodes-tallyrake/<version>`.
 
-MIT licensed. Questions: ops@tallyrake.com
+MIT licensed.
