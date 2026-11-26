@@ -26,6 +26,8 @@ export class Tallyrake implements INodeType {
 			headers: {
 				Accept: 'application/json',
 				'User-Agent': USER_AGENT,
+				// Sent twice on purpose: a gateway may replace User-Agent, and a custom header usually passes through.
+				'x-tallyrake-client': USER_AGENT,
 			},
 		},
 		properties: [

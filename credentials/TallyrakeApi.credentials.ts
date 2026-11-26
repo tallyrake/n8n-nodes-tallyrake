@@ -45,7 +45,7 @@ export class TallyrakeApi implements ICredentialType {
 			baseURL: `https://${RAPIDAPI_HOST}`,
 			url: '/interest',
 			qs: { terms: 'coffee' },
-			headers: { 'User-Agent': USER_AGENT },
+			headers: { 'User-Agent': USER_AGENT, 'x-tallyrake-client': USER_AGENT },
 		},
 	};
 }

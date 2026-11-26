@@ -47,6 +47,15 @@ test('the User-Agent names this package at the version in package.json', () => {
 	assert.equal(new TallyrakeApi().test.request.headers['User-Agent'], USER_AGENT);
 });
 
+// 2026-10-27 (t_c4674490): the Worker log names a call's client from x-tallyrake-client first, because a gateway may
+// replace User-Agent. n8n-node-feeds-rapidapi is falsified on that count, so a call without it reads as nobody's.
+test('every request also names this package in x-tallyrake-client, the header the Worker log reads first', () => {
+	const d = new Tallyrake().description;
+	assert.equal(d.requestDefaults.headers['x-tallyrake-client'], USER_AGENT);
+	assert.equal(new TallyrakeApi().test.request.headers['x-tallyrake-client'], USER_AGENT);
+	assert.match(USER_AGENT, /^n8n-nodes-tallyrake\/\d+\.\d+\.\d+$/, 'the shape the Worker allowlist accepts');
+});
+
 test('the node and its credential point at the one RapidAPI listing', () => {
 	const d = new Tallyrake().description;
 	assert.equal(d.displayName, 'Google Trends (Tallyrake)');
